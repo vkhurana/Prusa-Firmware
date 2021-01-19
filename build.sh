@@ -4,7 +4,7 @@ SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 if [ -f "./Firmware/Configuration_prusa.h" ]; then
     	#wget https://github.com/3d-gussner/PF-build-env-1/releases/download/$BUILD_ENV-Linux64/PF-build-env-Linux64-$BUILD_ENV.zip || exit 3
-        echo removing old config file
+	echo removing old config file
 	rm ./Firmware/Configuration_prusa.h
 	echo copying MK3S config file
 	cp ./Firmware/variants/1_75mm_MK3S-EINSy10a-E3Dv6full.h ./Firmware/Configuration_prusa.h
