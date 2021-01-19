@@ -7,7 +7,7 @@ if [ -f "./Firmware/Configuration_prusa.h" ]; then
 	echo removing old config file
 	rm ./Firmware/Configuration_prusa.h
 	echo copying MK3S config file
-	cp ./Firmware/variants/1_75mm_MK3S-EINSy10a-E3Dv6full.h ./Firmware/Configuration_prusa.h
+	cp ./Firmware/variants/1_75mm_MK3S-EINSy10a-E3Dv6full-vk.h ./Firmware/Configuration_prusa.h
 fi
 
 if [ ! -d "build-env" ]; then
