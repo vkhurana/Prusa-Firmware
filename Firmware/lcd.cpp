@@ -486,9 +486,15 @@ void lcd_escape_write(uint8_t chr)
 #endif //VT100
 
 
-int lcd_putc(int c)
+int lcd_putc(char c)
 {
 	return fputc(c, lcdout);
+}
+
+int lcd_putc_at(uint8_t c, uint8_t r, char ch)
+{
+	lcd_set_cursor(c, r);
+	return fputc(ch, lcdout);
 }
 
 int lcd_puts_P(const char* str)
@@ -722,6 +728,10 @@ void lcd_update_enable(uint8_t enabled)
 	}
 }
 
+bool lcd_longpress_trigger = 0;
+
+// WARNING: this function is called from the temperature ISR.
+//          Only update flags, but do not perform any menu/lcd operation!
 void lcd_buttons_update(void)
 {
     static uint8_t lcd_long_press_active = 0;
@@ -743,9 +753,7 @@ void lcd_buttons_update(void)
             else if (longPressTimer.expired(LONG_PRESS_TIME))
             {
                 lcd_long_press_active = 1;
-                //long press is not possible in modal mode
-                if (lcd_longpress_func && lcd_update_enabled)
-                    lcd_longpress_func();
+                lcd_longpress_trigger = 1;
             }
         }
     }
@@ -955,21 +963,6 @@ void lcd_set_custom_characters(void)
 void lcd_set_custom_characters_arrows(void)
 {
 	lcd_createChar_P(1, lcd_chardata_arrdown);
-}
-
-const uint8_t lcd_chardata_progress[8] PROGMEM = {
-	B11111,
-	B11111,
-	B11111,
-	B11111,
-	B11111,
-	B11111,
-	B11111,
-	B11111};
-
-void lcd_set_custom_characters_progress(void)
-{
-	lcd_createChar_P(1, lcd_chardata_progress);
 }
 
 const uint8_t lcd_chardata_arr2down[8] PROGMEM = {
