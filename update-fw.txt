@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/30131530/git-sync-to-upstream-newly-created-branch-not-showing-in-my-fork
+update .git/config
+merge on github
+pull
+clean https://github.com/prusa3d/Prusa-Firmware/issues/3138
+build
